@@ -57,15 +57,22 @@ Check complete documentation and the steps to install it. ( SUPER EASY ☺️ ) 
 
 To monitoring the services is necessary add the label "istio-injection=enabled" on the namespaces that you want to monitor.
 
-Let's use a default namespace as example: 
+Let's use a google-services namespace as example: 
 
 ```sh
-kubectl label namespace default istio-injection=enabled
+kubectl create ns google-services
+kubectl label namespace google-services istio-injection=enabled
 ```
 Check if the label was applied
 
 ```sh
-kubectl get ns default --show-labels
+kubectl get ns google-services --show-labels
+```
+
+Install services from google
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/release/kubernetes-manifests.yaml -n google-services
 ```
 ### 4- Integrations
 
@@ -88,19 +95,12 @@ kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.13/samp
 
 Check the list of all integrations available [here](https://istio.io/latest/docs/ops/integrations).
 
-
-kubectl create ns google-services
-kubectl label namespace google-services istio-injection=enabled
-
-kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/main/release/kubernetes-manifests.yaml -n google-services
-
-
-### 4- Check
+### 5- Check created pods
 
 ```sh
 kubectl get pods -n istio-system
 ```
-### 4- Port foward
+### 4- Port foward to access it.
 
 ```sh
 kubectl get svc -n istio-system
